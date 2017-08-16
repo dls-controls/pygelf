@@ -37,7 +37,9 @@ def make(record, domain, debug, version, additional_fields, include_extra_fields
         'source': domain
     }
 
-    if record.exc_info is not None:
+    if record.exc_text is not None:
+        gelf['full_message'] = record.exc_text
+    elif record.exc_info is not None:
         gelf['full_message'] = '\n'.join(traceback.format_exception(*record.exc_info))
 
     if debug:
